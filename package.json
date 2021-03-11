@@ -1,0 +1,10 @@
+{
+  "name": "sac-chat",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "jmann",
+  "license": "MIT",
+  "dependencies": {
+    "firebase": "^8.3.0"
+  }
+}
