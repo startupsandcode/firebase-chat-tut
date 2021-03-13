@@ -16,9 +16,9 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="Learn how to use the Firebase platform on the Web">
+  <meta name="description" content="Connecting through Vuya">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Friendly Chat</title>
+  <title>Vuya</title>
 
   <!-- Disable tap highlight on IE -->
   <meta name="msapplication-tap-highlight" content="no">
@@ -28,13 +28,13 @@
 
   <!-- Add to homescreen for Chrome on Android -->
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="Friendly Chat">
+  <meta name="application-name" content="Vuya">
   <meta name="theme-color" content="#303F9F">
 
   <!-- Add to homescreen for Safari on iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Friendly Chat">
+  <meta name="apple-mobile-web-app-title" content="Vuya">
   <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
 
   <!-- Tile icon for Win8 -->
@@ -49,6 +49,7 @@
   <!-- App Styling -->
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
   <link rel="stylesheet" href="styles/main.css">
 
   <!-- TODO: Enable First Input Delay polyfill library. -->
@@ -61,30 +62,54 @@
   <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
     <!-- Header section containing logo -->
-    <header class="mdl-layout__header mdl-color-text--white mdl-color--light-blue-700">
+    <header class="mdl-layout__header mdl-color-text--white">
       <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
         <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-          <h3><i class="material-icons">chat_bubble_outline</i> Friendly Chat</h3>
+          <img src="images/vuya-logo.png" title="Vuya" style="width:150px" />
         </div>
         <div id="user-container">
           <div hidden id="user-pic"></div>
           <div hidden id="user-name"></div>
-          <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+          <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect">
             Sign-out
-          </button>
-          <button id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
-            <i class="material-icons">account_circle</i>Sign-in with Google
           </button>
         </div>
       </div>
     </header>
 
     <main class="mdl-layout__content mdl-color--grey-100">
+      <div class="mdl-cell mdl-cell--12-col mdl-grid">
+        <div id="welcome-card">
+          <h2 class="about_header">About</h2>
+          <section class="about_text">A dynamic, passionate hands-on leader specializing in building development teams
+            that
+            deliver predictable
+            and scalable results. Drive Pipeline Growth and Code Quality through detail orientation, positivity,
+            accountability.</section>
+          <section class="text_title">
+            <p class="name">John <span>Mann</span></p>
+            <p class="title">Technical Director</p>
+            <button id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect">
+              <i class="material-icons">account_circle</i>Let's Connect
+            </button>
+          </section>
+          <p class="headshot"><img src="images/headshot.jpg" title="John Mann" /></p>
+        </div>
+        <div id="login-container" hidden class="mdl-cell mdl-cell--6-col">
+          <div id="firebaseui-auth-container"></div>
+        </div>
+        <div class="mdl-cell mdl-cell--3-col mdl-grid">
+          <div class="social-media">
+            <a href="#"><img src='images/facebook.svg' /></a>
+            <a href="#"><img src='images/linkedin.svg' /></a>
+            <a href="#"><img src='images/twitter.svg' /></a>
+          </div>
+        </div>
+      </div>
       <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
-
         <!-- Messages container -->
-        <div id="messages-card"
-          class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--6-col-tablet mdl-cell--6-col-desktop">
+        <div id="messages-card" hidden
+          class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet mdl-cell--6-col-desktop">
           <div class="mdl-card__supporting-text mdl-color-text--grey-600">
             <div id="messages">
             </div>
@@ -107,13 +132,69 @@
             </form>
           </div>
         </div>
-
         <div id="must-signin-snackbar" class="mdl-js-snackbar mdl-snackbar">
           <div class="mdl-snackbar__text"></div>
           <button class="mdl-snackbar__action" type="button"></button>
         </div>
+        <div id="files-card" hidden
+          class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet mdl-cell--6-col-desktop">
+          <h3>Documents</h3>
+          <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+            <table class="document-table">
+              <thead>
+                <td>Date</td>
+                <td>File</td>
+                <td>Description</td>
+                <td>Actions</td>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>02/20/2021</td>
+                  <td><a href="#">Voicemail.mp3</a></td>
+                  <td>Message from Ethan about TPS Contract</td>
+                  <td><i class="material-icons">file_download</i><i class="material-icons">edit</i><i
+                      class="material-icons">delete</i></td>
+                </tr>
+                <tr>
+                  <td>02/20/2021</td>
+                  <td><a href="#">Voicemail.mp3</a></td>
+                  <td>Message from Ethan about TPS Contract</td>
+                  <td><i class="material-icons">file_download</i><i class="material-icons">edit</i><i
+                      class="material-icons">delete</i></td>
+                </tr>
+                <tr>
+                  <td>02/20/2021</td>
+                  <td><a href="#">Voicemail.mp3</a></td>
+                  <td>Message from Ethan about TPS Contract</td>
+                  <td><i class="material-icons">file_download</i><i class="material-icons">edit</i><i
+                      class="material-icons">delete</i></td>
+                </tr>
+                <tr>
+                  <td>02/20/2021</td>
+                  <td><a href="#">Voicemail.mp3</a></td>
+                  <td>Message from Ethan about TPS Contract</td>
+                  <td><i class="material-icons">file_download</i><i class="material-icons">edit</i><i
+                      class="material-icons">delete</i></td>
+                </tr>
+                <tr>
+                  <td>02/20/2021</td>
+                  <td><a href="#">Voicemail.mp3</a></td>
+                  <td>Message from Ethan about TPS Contract</td>
+                  <td><i class="material-icons">file_download</i><i class="material-icons">edit</i><i
+                      class="material-icons">delete</i></td>
+                </tr>
+                <tr>
+                  <td>02/20/2021</td>
+                  <td><a href="#">Voicemail.mp3</a></td>
+                  <td>Message from Ethan about TPS Contract</td>
+                  <td><i class="material-icons">file_download</i><i class="material-icons">edit</i><i
+                      class="material-icons">delete</i></td>
+                </tr>
 
-      </div>
+              </tbody>
+            </table>
+          </div>
+        </div>
     </main>
   </div>
 
@@ -126,8 +207,8 @@
   <script src="/__/firebase/8.2.10/firebase-messaging.js"></script>
   <script src="/__/firebase/8.2.10/firebase-firestore.js"></script>
   <script src="/__/firebase/8.2.10/firebase-performance.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.js"></script>
   <script src="/__/firebase/init.js"></script>
-
   <script src="scripts/main.js"></script>
 </body>
 

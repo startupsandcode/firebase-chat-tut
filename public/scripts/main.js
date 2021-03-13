@@ -15,17 +15,47 @@
  */
 'use strict';
 
+var ui;
+
 // Signs-in Friendly Chat.
 function signIn() {
   // Sign into Firebase using popup auth & Google as the identity provider.
-  var provider = new firebase.auth.GoogleAuthProvider();
-  firebase.auth().signInWithPopup(provider);
+  //var provider = new firebase.auth.GoogleAuthProvider();
+  var uiConfig = {
+    signInFlow: 'popup',
+    callbacks: {
+      signInSuccess: () => false,
+    },
+    signInOptions: [
+      // Leave the lines as is for the providers you want to offer your users.
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+    ],
+    // tosUrl and privacyPolicyUrl accept either url string or a callback
+    // function.
+    // Terms of service url/callback.
+    tosUrl: '<your-tos-url>',
+    // Privacy policy url/callback.
+    privacyPolicyUrl: function () {
+      window.location.assign('<your-privacy-policy-url>');
+    }
+  };
+
+  // Initialize the FirebaseUI Widget using Firebase.
+  ui = new firebaseui.auth.AuthUI(firebase.auth());
+  // The start method will wait until the DOM is loaded.
+  ui.start('#firebaseui-auth-container', uiConfig);
+  loginContainer.removeAttribute('hidden');
+
+  // var provider = new firebase.auth.TwitterAuthProvider();
+  // firebase.auth().signInWithPopup(provider);
 }
 
 // Signs-out of Friendly Chat.
 function signOut() {
   // Sign out of Firebase.
   firebase.auth().signOut();
+  ui.delete()
 }
 
 // Initiate Firebase Auth.
@@ -190,9 +220,12 @@ function authStateObserver(user) {
     userNameElement.removeAttribute('hidden');
     userPicElement.removeAttribute('hidden');
     signOutButtonElement.removeAttribute('hidden');
+    messageCardContainer.removeAttribute('hidden');
+    filesCardContainer.removeAttribute('hidden');
 
     // Hide sign-in button.
     signInButtonElement.setAttribute('hidden', 'true');
+    loginContainer.setAttribute('hidden', 'true');
 
     // We save the Firebase Messaging Device token and enable notifications.
     saveMessagingDeviceToken();
@@ -201,9 +234,12 @@ function authStateObserver(user) {
     userNameElement.setAttribute('hidden', 'true');
     userPicElement.setAttribute('hidden', 'true');
     signOutButtonElement.setAttribute('hidden', 'true');
+    messageCardContainer.setAttribute('hidden', 'true');
+    filesCardContainer.setAttribute('hidden', 'true');
 
     // Show sign-in button.
     signInButtonElement.removeAttribute('hidden');
+    loginContainer.removeAttribute('hidden');
   }
 }
 
@@ -363,6 +399,9 @@ var userNameElement = document.getElementById('user-name');
 var signInButtonElement = document.getElementById('sign-in');
 var signOutButtonElement = document.getElementById('sign-out');
 var signInSnackbarElement = document.getElementById('must-signin-snackbar');
+var loginContainer = document.getElementById('login-container');
+var messageCardContainer = document.getElementById('messages-card');
+var filesCardContainer = document.getElementById('files-card');
 
 // Saves message on form submit.
 messageFormElement.addEventListener('submit', onMessageFormSubmit);
