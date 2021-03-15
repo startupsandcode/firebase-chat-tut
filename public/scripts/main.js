@@ -225,7 +225,7 @@ function authStateObserver(user) {
 
     // Hide sign-in button.
     signInButtonElement.setAttribute('hidden', 'true');
-    loginContainer.setAttribute('hidden', 'true');
+    welcomeContainer.setAttribute('hidden', 'true');
 
     // We save the Firebase Messaging Device token and enable notifications.
     saveMessagingDeviceToken();
@@ -239,7 +239,7 @@ function authStateObserver(user) {
 
     // Show sign-in button.
     signInButtonElement.removeAttribute('hidden');
-    loginContainer.removeAttribute('hidden');
+    welcomeContainer.removeAttribute('hidden');
   }
 }
 
@@ -399,6 +399,7 @@ var userNameElement = document.getElementById('user-name');
 var signInButtonElement = document.getElementById('sign-in');
 var signOutButtonElement = document.getElementById('sign-out');
 var signInSnackbarElement = document.getElementById('must-signin-snackbar');
+var welcomeContainer = document.getElementById('welcome-card');
 var loginContainer = document.getElementById('login-container');
 var messageCardContainer = document.getElementById('messages-card');
 var filesCardContainer = document.getElementById('files-card');

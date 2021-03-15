@@ -262,11 +262,12 @@ main,
 }
 .about_text {
   flex: 2;
-  margin: 40px;
+  margin: 10px 40px;
 }
 .text_title {
   flex: 3;
-  margin: 40px;
+  margin: 10px 40px;
+  text-align: center;
   .name {
     font-size: 2rem;
     color: $primary-green;
@@ -289,9 +290,11 @@ main,
     background-color: darkgreen;
     color: #fff;
     text-align: left;
-    padding: 20px;
+    padding: 10px;
+    font-size: 25px;
+    line-height: 28px;
   }
-  img {
+  img.profile {
     width: 250px;
     border-radius: 20px;
     padding: 10px;

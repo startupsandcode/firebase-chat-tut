@@ -52,7 +52,6 @@
   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
   <link rel="stylesheet" href="styles/main.css">
 
-  <!-- TODO: Enable First Input Delay polyfill library. -->
   <script
     type="text/javascript">!function (n, e) { var t, o, i, c = [], f = { passive: !0, capture: !0 }, r = new Date, a = "pointerup", u = "pointercancel"; function p(n, c) { t || (t = c, o = n, i = new Date, w(e), s()) } function s() { o >= 0 && o < i - r && (c.forEach(function (n) { n(o, t) }), c = []) } function l(t) { if (t.cancelable) { var o = (t.timeStamp > 1e12 ? new Date : performance.now()) - t.timeStamp; "pointerdown" == t.type ? function (t, o) { function i() { p(t, o), r() } function c() { r() } function r() { e(a, i, f), e(u, c, f) } n(a, i, f), n(u, c, f) }(o, t) : p(o, t) } } function w(n) { ["click", "mousedown", "keydown", "touchstart", "pointerdown"].forEach(function (e) { n(e, l, f) }) } w(n), self.perfMetrics = self.perfMetrics || {}, self.perfMetrics.onFirstInputDelay = function (n) { c.push(n), s() } }(addEventListener, removeEventListener);</script>
 
@@ -78,32 +77,35 @@
     </header>
 
     <main class="mdl-layout__content mdl-color--grey-100">
-      <div class="mdl-cell mdl-cell--12-col mdl-grid">
-        <div id="welcome-card">
+      <div id="welcome-card" class="mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col">
           <h2 class="about_header">About</h2>
-          <section class="about_text">A dynamic, passionate hands-on leader specializing in building development teams
-            that
-            deliver predictable
-            and scalable results. Drive Pipeline Growth and Code Quality through detail orientation, positivity,
-            accountability.</section>
+          <section class="about_text">Entrepreneur, Founder, CEO. Passionate about building a great company culture.
+            Driven technology entrepreneur who specializes in internationalizing start-up companies, recruiting and
+            retaining premier talent, and building first-class customer service operations.
+          </section>
+        </div>
+        <div class="mdl-cell mdl-cell--4-col">
           <section class="text_title">
-            <p class="name">John <span>Mann</span></p>
-            <p class="title">Technical Director</p>
+            <p class="name">Lance <span>Berks</span></p>
+            <p class="title">CEO</p>
             <button id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect">
               <i class="material-icons">account_circle</i>Let's Connect
             </button>
+            <div id="login-container" hidden>
+              <div id="firebaseui-auth-container"></div>
+            </div>
           </section>
-          <p class="headshot"><img src="images/headshot.jpg" title="John Mann" /></p>
         </div>
-        <div id="login-container" hidden class="mdl-cell mdl-cell--6-col">
-          <div id="firebaseui-auth-container"></div>
+        <div class="mdl-cell mdl-cell--4-col">
+          <p class="headshot"><img class="profile" src="images/lance.jpg" title="Lance Berks" /></p>
         </div>
-        <div class="mdl-cell mdl-cell--3-col mdl-grid">
-          <div class="social-media">
-            <a href="#"><img src='images/facebook.svg' /></a>
-            <a href="#"><img src='images/linkedin.svg' /></a>
-            <a href="#"><img src='images/twitter.svg' /></a>
-          </div>
+      </div>
+      <div class="mdl-cell mdl-cell--3-col mdl-grid">
+        <div class="social-media">
+          <a href="#"><img src='images/facebook.svg' /></a>
+          <a href="#"><img src='images/linkedin.svg' /></a>
+          <a href="#"><img src='images/twitter.svg' /></a>
         </div>
       </div>
       <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">

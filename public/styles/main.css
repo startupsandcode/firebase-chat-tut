@@ -236,11 +236,12 @@ main,
 
 .about_text {
   flex: 2;
-  margin: 40px; }
+  margin: 10px 40px; }
 
 .text_title {
   flex: 3;
-  margin: 40px; }
+  margin: 10px 40px;
+  text-align: center; }
   .text_title .name {
     font-size: 2rem;
     color: #0daf4b; }
@@ -259,8 +260,10 @@ main,
     background-color: darkgreen;
     color: #fff;
     text-align: left;
-    padding: 20px; }
-  #welcome-card img {
+    padding: 10px;
+    font-size: 25px;
+    line-height: 28px; }
+  #welcome-card img.profile {
     width: 250px;
     border-radius: 20px;
     padding: 10px; }
